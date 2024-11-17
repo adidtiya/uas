@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "Harsa2012",
+    "database": "frontend",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "Harsa2012",
+    "database": "test_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "Harsa2012",
+    "database": "prod_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}

@@ -20,6 +20,47 @@ app.controller('IndexController', function($scope) {
 
 });
 
+// Define the AngularJS SignupController
+app.controller('SignupController', function($scope, $http) {
+    // Initialize user object
+    $scope.user = {};
+
+    // Signup function
+    $scope.signup = function() {
+        // Debug log: Check if the function is being called
+        console.log('Signup initiated:', $scope.user);
+
+        $http.post('/auth/signup', $scope.user, {
+            headers: { 'Content-Type': 'application/json' }
+        })
+        .then(function(response) {
+            console.log('Signup response:', response);
+            alert('Signup successful: ' + response.data.message);
+            window.location.href = '/login.html';
+        })
+        .catch(function(err) {
+            console.error('Signup failed:', err);
+            alert('Signup failed: ' + (err.data.error || err.message));
+        });
+        
+        
+    };
+});
+
+app.controller('LoginController', function($scope, $http) {
+    $scope.user = {};
+
+    $scope.login = function() {
+        $http.post('/auth/login', $scope.user)
+            .then(response => {
+                alert(response.data.message);
+                window.location.href = 'index.html';
+            })
+            .catch(err => alert(err.data.error));
+    };
+});
+
+
 
 $(document).ready(function(){
 

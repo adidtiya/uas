@@ -1,9 +1,8 @@
-// Inisialisasi aplikasi AngularJS
+
 const app = angular.module('balancedBlissApp', []);
 
-// Controller untuk Index.html
 app.controller('IndexController', function($scope) {
-    // Data untuk navigasi
+
     $scope.navItems = [
         { id: "home", label: "Home" },
         { id: "about", label: "About" },
@@ -13,7 +12,6 @@ app.controller('IndexController', function($scope) {
     ];
 
 
-    // Fungsi untuk menavigasi ke bagian tertentu
     $scope.navigate = function(section) {
         document.getElementById(section).scrollIntoView({ behavior: "smooth" });
     };

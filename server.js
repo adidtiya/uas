@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const mainRoutes = require('./routes/mainRoutes');
-const db = require('./db'); // Import the database connection
+const db = require('./db'); 
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -11,10 +11,10 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', mainRoutes);
 
-// Example route to test database connection
+
 app.get('/test-db', async (req, res) => {
     try {
-        const result = await db.query('SELECT NOW()'); // Simple query to check connection
+        const result = await db.query('SELECT NOW()'); 
         res.json({ message: 'Database connection successful', time: result.rows[0] });
     } catch (err) {
         console.error('Database query error', err);

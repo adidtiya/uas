@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="balancedBlissApp">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,26 +11,22 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
     </style>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
     <script src="/js/script.js"></script>
 </head>
-<body>    
+<body ng-app="balancedBlissApp" ng-controller="IndexController">    
     <!-- HEADER  -->
     <header class="header">
 
         <a href="#" class="logo"> BalancedBliss</a>
 
         <nav class="navbar">
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#reason">Reason</a>
-            <a href="#tips">Tips</a>
-            <a href="#reviews">review</a>
+            <a href="" ng-repeat="item in navItems" ng-click="navigate(item.id)">{{ item.label }}</a>
         </nav>
 
         <div class="fas fa-bars" id="menu-icon">
@@ -42,7 +38,7 @@
      <!-- HEADER END -->
 
      <!-- home section start -->
-
+     <div ng-view></div>
      <section class="home" id="home">
 
         <video autoplay muted loop id="background-video">

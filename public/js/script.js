@@ -3,7 +3,18 @@ const app = angular.module('balancedBlissApp', []); // Define and assign the app
 console.log('balancedBlissApp module defined');
 
 // Controller for Index.html
-app.controller('IndexController', ['$scope', function($scope) {
+app.controller('IndexController', ['$scope', '$http', function($scope, $http) { // Inject $http
+    $scope.username = ''; // Initialize username variable
+
+    // Fetch username (assuming session or token-based authentication)
+    $http.get('/auth/get-user') // Backend endpoint to get user info
+        .then(function(response) {
+            $scope.username = response.data.username; // Set username from the response
+        })
+        .catch(function(err) {
+            console.error('Failed to fetch username:', err);
+        });
+
     // Data for navigation
     $scope.navItems = [
         { id: "home", label: "Home" },

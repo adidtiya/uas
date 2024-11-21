@@ -1,8 +1,10 @@
+// Initialize AngularJS application
+const app = angular.module('balancedBlissApp', []); // Define and assign the app module
+console.log('balancedBlissApp module defined');
 
-const app = angular.module('balancedBlissApp', []);
-
-app.controller('IndexController', function($scope) {
-
+// Controller for Index.html
+app.controller('IndexController', ['$scope', function($scope) {
+    // Data for navigation
     $scope.navItems = [
         { id: "home", label: "Home" },
         { id: "about", label: "About" },
@@ -11,33 +13,26 @@ app.controller('IndexController', function($scope) {
         { id: "reviews", label: "Reviews" }
     ];
 
-
+    // Function to navigate to specific sections
     $scope.navigate = function(section) {
         document.getElementById(section).scrollIntoView({ behavior: "smooth" });
     };
+}]);
 
-});
-
-
-$(document).ready(function(){
-
-    $('.buttons').click(function(){
-
+// jQuery for UI interactions
+$(document).ready(function() {
+    // Filter for tips section
+    $('.buttons').click(function() {
         $(this).addClass('active').siblings().removeClass('active');
-
-        var filter = $(this).attr('data-filter')
-
-            $('.tips .box').not('.' + filter).hide(100);
-            $('.tips .box').filter('.' + filter).show(100);
-
+        var filter = $(this).attr('data-filter');
+        $('.tips .box').not('.' + filter).hide(100);
+        $('.tips .box').filter('.' + filter).show(100);
     });
 
+    // Default filter for sport category
     $('.buttons[data-filter="sport"]').trigger('click');
 
-});
-
-
-$(document).ready(function() {
+    // Swiper for reviews slider
     var swiper = new Swiper('.review-slider', {
         loop: true,
         grabCursor: true,
@@ -68,19 +63,4 @@ $(document).ready(function() {
     window.onscroll = () => {
         navbar.classList.remove("active");
     };
-
-    $(document).ready(function() {
-        $('.navbar a').click(function() {
-            $('#menu-icon').removeClass('fa-times');
-            $('.navbar').removeClass('active');
-        });
-    
-        $(window).resize(function() {
-            if ($(window).width() > 768) {
-                $('#menu-icon').removeClass('fa-times');
-                $('.navbar').removeClass('active');
-            }
-        });
-    });
-    
 });

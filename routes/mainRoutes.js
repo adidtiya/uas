@@ -19,7 +19,6 @@ router.get('/protected-route', isAuthenticated, (req, res) => {
     res.json({ message: 'You have access to this protected route' });
 });
 
-// Route to handle the home page
 router.get('/', mainController.renderHomePage);
 
 module.exports = router;

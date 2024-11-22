@@ -41,7 +41,7 @@ app.get('/index.html', (req, res) => {
 // Example route to test database connection
 app.get('/test-db', async (req, res) => {
     try {
-        const result = await db.query('SELECT NOW()'); // Simple query to check connection
+        const result = await db.query('SELECT NOW()'); 
         res.json({ message: 'Database connection successful', time: result.rows[0] });
     } catch (err) {
         console.error('Database query error', err);

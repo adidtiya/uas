@@ -27,9 +27,9 @@
 
         <nav class="navbar">
             <a href="" ng-repeat="item in navItems" ng-click="navigate(item.id)">{{ item.label }}</a>
-            <a href="/signup.html" class="btn">Sign Up</a>
+            <a ng-if="username" href="/profile.html" class="btn">{{ username }}</a>
+            <a ng-if="!username" href="/signup.html" class="btn">Sign Up</a>
         </nav>
-
         <div class="fas fa-bars" id="menu-icon">
 
         </div>

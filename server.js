@@ -38,6 +38,15 @@ app.get('/index.html', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
+app.get('/profile.html', (req, res) => {
+    // Optional: Check if user is logged in
+    if (!req.session.user) {
+        return res.redirect('/login.html');
+    }
+    res.sendFile(path.join(__dirname, 'views', 'profile.html'));
+});
+
+
 // Example route to test database connection
 app.get('/test-db', async (req, res) => {
     try {

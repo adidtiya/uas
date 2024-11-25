@@ -1,8 +1,7 @@
 angular.module('balancedBlissApp')
     .controller('ProfileController', ['$scope', '$http', function($scope, $http) {
         $scope.user = {};
-        $scope.isEditing = false; // Edit mode off by default
-        $scope.newPhoto = null;
+        $scope.isEditing = false;
 
         // Fetch user data
         $http.get('/auth/get-user')
@@ -11,33 +10,30 @@ angular.module('balancedBlissApp')
             })
             .catch(function(err) {
                 console.error('Error fetching user data:', err);
-                window.location.href = '/login.html'; // Redirect to login if not logged in
+                window.location.href = '/login.html'; // Redirect to login if not authenticated
             });
 
         // Toggle edit mode
         $scope.toggleEdit = function() {
-            $scope.isEditing = !$scope.isEditing; // Toggle edit mode
+            $scope.isEditing = !$scope.isEditing;
         };
 
         // Save updated profile
         $scope.saveProfile = function() {
             const formData = new FormData();
             formData.append('username', $scope.user.username);
-            if (document.getElementById('uploadPhoto').files.length > 0) {
-                formData.append('profilePhoto', document.getElementById('uploadPhoto').files[0]);
+            const fileInput = document.getElementById('uploadPhoto');
+            if (fileInput.files[0]) {
+                formData.append('profilePhoto', fileInput.files[0]);
             }
 
             $http.put('/auth/update-profile', formData, {
                 headers: { 'Content-Type': undefined },
-            })
-            .then(function(response) {
+            }).then(response => {
                 alert('Profile updated successfully!');
-                $scope.isEditing = false; // Exit edit mode
-                if (response.data.photoUrl) {
-                    $scope.user.profilePhoto = response.data.photoUrl; // Update photo in UI
-                }
-            })
-            .catch(function(err) {
+                $scope.user.profilePhoto = response.data.photoUrl; // Update photo
+                $scope.isEditing = false;
+            }).catch(err => {
                 console.error('Error updating profile:', err);
                 alert('Failed to update profile.');
             });
@@ -45,14 +41,10 @@ angular.module('balancedBlissApp')
 
         // Cancel edit
         $scope.cancelEdit = function() {
-            $scope.isEditing = false; // Exit edit mode
-            $http.get('/auth/get-user') // Reload original data
-                .then(function(response) {
-                    $scope.user = response.data;
-                });
+            $scope.isEditing = false;
         };
 
-        // Logout function
+        // Logout
         $scope.logout = function() {
             $http.post('/auth/logout')
                 .then(function() {
@@ -61,5 +53,25 @@ angular.module('balancedBlissApp')
                 .catch(function(err) {
                     console.error('Logout failed:', err);
                 });
+        };
+
+        // Redirect to main menu
+        $scope.goToMainMenu = function() {
+            window.location.href = '/index.html';
+        };
+
+        // Delete account
+        $scope.deleteAccount = function() {
+            if (confirm('Are you sure you want to delete your account?')) {
+                $http.delete('/auth/delete-account')
+                    .then(function(response) {
+                        alert('Account deleted successfully!');
+                        window.location.href = '/index.html';
+                    })
+                    .catch(function(err) {
+                        console.error('Failed to delete account:', err);
+                        alert('Failed to delete account.');
+                    });
+            }
         };
     }]);

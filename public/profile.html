@@ -43,8 +43,6 @@
             margin: 10px 5px;
             padding: 10px 15px;
             font-size: 14px;
-            background-color: #007bff;
-            color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -52,6 +50,7 @@
 
         .profile-actions button.logout {
             background-color: #dc3545;
+            color: white;
         }
 
         .profile-actions button:hover {
@@ -88,10 +87,6 @@
             color: black;
         }
 
-        .btn-save:hover, .btn-cancel:hover {
-            opacity: 0.9;
-        }
-
         .edit-section {
             display: none; /* Hidden by default */
         }
@@ -104,21 +99,20 @@
 <body ng-controller="ProfileController">
     <div class="profile-container">
         <img ng-src="{{ user.profilePhoto || '/images/default-photo.png' }}" alt="Profile Photo" class="profile-photo">
-        <div class="profile-details">
-            <p><strong>Username:</strong> {{ user.username }}</p>
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Member since:</strong> {{ user.joinedDate | date:'MMMM d, yyyy' }}</p>
-        </div>
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Joined:</strong> {{ user.joinedDate | date:'longDate' }}</p>
 
         <div class="profile-actions">
             <button ng-click="toggleEdit()">Edit Profile</button>
-            <button class="logout" ng-click="logout()">Logout</button>
+            <button ng-click="goToMainMenu()">Main Menu</button>
+            <button ng-click="logout()" class="logout">Logout</button>
+            <button class="delete-account" ng-click="deleteAccount()">Delete Account</button>
         </div>
 
-        <!-- Edit Section -->
         <div class="edit-section" ng-class="{ active: isEditing }">
             <input type="text" ng-model="user.username" placeholder="Enter new username">
-            <input type="file" id="uploadPhoto" ng-model="newPhoto" style="display: block;">
+            <input type="file" id="uploadPhoto" style="display: block;">
             <button class="btn-save" ng-click="saveProfile()">Save Changes</button>
             <button class="btn-cancel" ng-click="cancelEdit()">Cancel</button>
         </div>

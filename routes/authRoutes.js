@@ -67,6 +67,7 @@ router.post('/login', async (req, res) => {
             id: user.id,
             username: user.username,
             email: user.email,
+            profilePhoto: user.profilePhoto, 
         };
 
         res.status(200).json({ message: 'Login successful', user: req.session.user });
@@ -87,11 +88,25 @@ router.post('/logout', (req, res) => {
 });
 
 // Get Current User Route
-router.get('/get-user', (req, res) => {
-    if (req.session && req.session.user) {
-        return res.status(200).json(req.session.user);
+router.get('/get-user', async (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: 'Not authenticated' });
     }
-    res.status(401).json({ error: 'Not authenticated' });
+
+    try {
+        const user = await User.findByPk(req.session.user.id);
+        if (user) {
+            return res.status(200).json({
+                username: user.username,
+                email: user.email,
+                profilePhoto: user.profilePhoto, // Ambil dari database
+                joinedDate: user.createdAt,
+            });
+        }
+        res.status(404).json({ error: 'User not found' });
+    } catch (err) {
+        res.status(500).json({ error: 'Internal server error', details: err.message });
+    }
 });
 
 // Fetch user data

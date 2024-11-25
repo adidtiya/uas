@@ -13,7 +13,9 @@ angular.module('balancedBlissApp')
                 })
                 .catch(function(err) {
                     console.error('Signup failed:', err);
-                    alert('Signup failed: ' + (err.data.error || err.message));
+                    const errorMsg = err.data?.error || 'An error occurred during signup.';
+                    alert('Signup failed: ' + errorMsg);
                 });
         };
+        
     }]);

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="balancedBlissApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/controllers/ProfileController.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .profile-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 20px auto;
+        }
+
+        .profile-details p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+
+        .profile-actions button {
+            margin: 10px 5px;
+            padding: 10px 15px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .profile-actions button.logout {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .profile-actions button:hover {
+            opacity: 0.9;
+        }
+
+        .edit-section {
+            margin-top: 20px;
+        }
+
+        .edit-section input[type="text"], .edit-section input[type="file"] {
+            margin: 10px 0;
+            padding: 8px;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .edit-section button {
+            padding: 8px 15px;
+            font-size: 14px;
+            margin: 10px 5px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .btn-save {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-cancel {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .edit-section {
+            display: none; /* Hidden by default */
+        }
+
+        .edit-section.active {
+            display: block; /* Show when editing */
+        }
+    </style>
+</head>
+<body ng-controller="ProfileController">
+    <div class="profile-container">
+        <img ng-src="{{ user.profilePhoto || '/images/default-photo.png' }}" alt="Profile Photo" class="profile-photo">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        <p><strong>Email:</strong> {{ user.email }}</p>
+        <p><strong>Joined:</strong> {{ user.joinedDate | date:'longDate' }}</p>
+
+        <div class="profile-actions">
+            <button ng-click="toggleEdit()">Edit Profile</button>
+            <button ng-click="goToMainMenu()">Main Menu</button>
+            <button ng-click="logout()" class="logout">Logout</button>
+            <button class="delete-account" ng-click="deleteAccount()">Delete Account</button>
+        </div>
+
+        <div class="edit-section" ng-class="{ active: isEditing }">
+            <input type="text" ng-model="user.username" placeholder="Enter new username">
+            <input type="file" id="uploadPhoto" style="display: block;">
+            <button class="btn-save" ng-click="saveProfile()">Save Changes</button>
+            <button class="btn-cancel" ng-click="cancelEdit()">Cancel</button>
+        </div>
+    </div>
+</body>
+</html>

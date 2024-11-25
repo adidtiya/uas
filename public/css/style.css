@@ -244,6 +244,13 @@ section{
     font-weight: bolder;
     padding-bottom: 3.5rem;
 }
+.home .content h4{
+    font-size: 5rem;
+    text-transform: uppercase;
+    color: var(--hover2);
+    font-weight: bolder;
+    padding-bottom: 3.5rem;
+}
 
 
 /* About */

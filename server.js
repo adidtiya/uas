@@ -1,8 +1,6 @@
 const express = require('express');
 const session = require('express-session');
 const path = require('path');
-const mainRoutes = require('./routes/mainRoutes');
-const db = require('./db'); // Import the database connection
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
 const sequelize = require('./config/database'); // Sequelize instance
@@ -11,7 +9,6 @@ require('dotenv').config(); // Load .env file
 
 const app = express();
 const PORT = 3000;
-app.use(cors());
 
 // Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));

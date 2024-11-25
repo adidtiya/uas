@@ -58,17 +58,27 @@ app.get('/test-db', async (req, res) => {
     }
 });
 
-app.get('/auth/get-user', (req, res) => {
+app.get('/auth/get-user', async (req, res) => {
     if (!req.session.user) {
         return res.status(401).send('Unauthorized');
     }
-    const user = {
-        username: req.session.user.username,
-        email: req.session.user.email,
-        profilePhoto: req.session.user.profilePhoto,
-        joinedDate: req.session.user.joinedDate, // Assuming this is stored in session
-    };
-    res.json(user);
+
+    try {
+        const user = await User.findByPk(req.session.user.id);
+        if (user) {
+            res.json({
+                username: user.username,
+                email: user.email,
+                profilePhoto: user.profilePhoto,
+                joinedDate: user.createdAt,
+            });
+        } else {
+            res.status(404).send('User not found');
+        }
+    } catch (err) {
+        console.error('Error fetching user:', err);
+        res.status(500).send('Error fetching user');
+    }
 });
 
 app.delete('/auth/delete-account', (req, res) => {

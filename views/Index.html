@@ -320,65 +320,18 @@
 </section>
 
    <!-- review -->
-   <section class="reviews" id="reviews">
-
-    <h1 class="heading">Client's reviews</h1>
-    <div class="swiper review-slider">
-
-        <div class="swiper-wrapper">
-
-            <div class="swiper-slide slide">
-                <p>Website ini benar-benar informatif dan mudah dipahami. Panduan diet yang ditawarkan sangat terstruktur, memberikan saran yang realistis dan bisa diikuti oleh siapa saja. Selain itu, resep-resep yang disediakan cocok untuk berbagai jenis preferensi, mulai dari vegetarian hingga rendah kalori. Saya merasa terbantu dengan adanya kalkulator kalori yang memudahkan untuk merencanakan asupan harian.</p>
-                <div class="user">
-                    <img src="images\Dhani Pratama.jpg" alt="">
-                    <div class="info">
-                        <h3>Dhani Pratama</h3>
-                        <span>Pengusaha Kuliner Sehat</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="swiper-slide slide">
-                <p>Sebagai pemula dalam gaya hidup sehat, website ini membantu saya memahami dasar-dasar diet dan olahraga dengan artikel yang mudah diikuti dan referensi terpercaya. Rutinitas olahraga yang disarankan sangat realistis, dan saya juga mendapatkan wawasan baru tentang pentingnya tidur dan waktu istirahat dalam mendukung kebugaran tubuh.
-                </p>
-                <div class="user">
-                    <img src="images\Citra Anggraini.jpg" alt="">
-                    <div class="info">
-                        <h3>Citra Anggraini</h3>
-                        <span>Kesehatan Masyarakat</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="swiper-slide slide">
-                <p>Website ini memberikan panduan holistik tentang diet, olahraga, dan pentingnya waktu istirahat, dengan menu diet mingguan yang seimbang dan rutinitas latihan yang disertai video panduan. Saya juga belajar bahwa tanpa pola istirahat yang baik, upaya dalam diet dan olahraga tidak akan optimal, membuat situs ini sangat membantu dalam menjaga gaya hidup sehat.</p>
-                <div class="user">
-                    <img src="images\Budi Santoso.jpg" alt="">
-                    <div class="info">
-                        <h3>Budi Santoso</h3>
-                        <span>Personal Trainer</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="swiper-slide slide">
-                <p>Website ini menawarkan panduan lengkap untuk menjalani gaya hidup sehat, mulai dari pola makan seimbang hingga cara memasak makanan sehat. Program latihan yang disediakan sangat mudah diikuti, bahkan bagi pemula, dengan penekanan pada pentingnya istirahat yang cukup untuk pemulihan dan peningkatan kebugaran.</p>
-                <div class="user">
-                    <img src="images\Aulia Rahma.jpg" alt="">
-                    <div class="info">
-                        <h3>Aulia Rahma</h3>
-                        <span>Ahli Gizi</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
+   
+<section class="reviews" id="reviews">
+    <h1 class="heading">Client's Reviews</h1>
+    <button class="btn" onclick="toggleReviews()">Show Reviews</button>
+    <div id="review-container" style="display: none;">
+        <div id="existing-reviews"></div>
+        <textarea id="review-content" placeholder="Write your review..."></textarea>
+        <button class="btn" onclick="submitReview()">Submit Review</button>
     </div>
-
-
-
 </section>
+
+
 
 
 <!-- review end-->

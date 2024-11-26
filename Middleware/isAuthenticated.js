@@ -1,6 +1,7 @@
 module.exports = (req, res, next) => {
+    console.log('Session data:', req.session); // Debug session data
     if (req.session && req.session.user) {
-        return next(); // User is authenticated, proceed to the next middleware or route handler
+        return next();
     }
-    res.status(401).json({ error: 'Unauthorized access' });
+    res.status(401).json({ error: 'Unauthorized. Please log in.' });
 };

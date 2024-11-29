@@ -321,15 +321,20 @@
 
    <!-- review -->
    
-<section class="reviews" id="reviews">
-    <h1 class="heading">Client's Reviews</h1>
-    <button class="btn" onclick="toggleReviews()">Show Reviews</button>
+   <section class="reviews" id="reviews" style="font-size: 1.2rem; padding: 20px; background-color: #f9f9f9;">
+    <h1 class="heading" style="font-size: 2rem; text-align: center; color: #333;">Client's Reviews</h1>
+    <button class="btn" onclick="toggleReviews()" style="padding: 12px 20px; background-color: #4CAF50; color: white; border-radius: 8px; font-size: 1rem;">
+        Show Reviews
+    </button>
     <div id="review-container" style="display: none;">
         <div id="existing-reviews"></div>
-        <textarea id="review-content" placeholder="Write your review..."></textarea>
-        <button class="btn" onclick="submitReview()">Submit Review</button>
+        <textarea id="review-content" placeholder="Write your review..." style="width: 100%; padding: 15px; border: 1px solid #ddd; border-radius: 8px; font-size: 1rem; resize: vertical; min-height: 120px; margin-bottom: 15px;"></textarea>
+        <button class="btn" onclick="submitReview()" style="padding: 12px 20px; background-color: #4CAF50; color: white; border-radius: 8px; font-size: 1rem;">
+            Submit Review
+        </button>
     </div>
 </section>
+
 
 
 

@@ -498,102 +498,110 @@ section{
 
 /* tips end */
 
-/* review */
+/* review */    
 
-.reviews .slide {
-    display: inline-block;
-    position: relative;
-    margin-top: 1rem;
-    background-color: var(--black) ;
-    color: var(--black); 
-    padding: 3px 20px 10px 15px;
-    border: none; 
-    border-radius: 8px; 
-    z-index: 1;
-    font-size: 16px; 
-    cursor: pointer; 
+/* Styling untuk section reviews */
+.reviews {
+    padding: 20px !important;
+    background-color: #f9f9f9 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+    max-width: 900px !important;
+    margin: 0 auto !important;
+    font-family: 'Arial', sans-serif !important;
 }
 
-.reviews .slide::before {
-    content: '';
-    position: absolute;
-    bottom: 8px; 
-    right: 8px; 
-    width: 100%;
-    height: 100%;
-    background-color: var(--main-color); 
-    z-index: -1; 
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
+/* Styling untuk heading */
+.reviews .heading {
+    text-align: center !important;
+    font-size: 2rem !important;
+    margin-bottom: 20px !important;
+    color: #333 !important;
 }
 
-.reviews .slide p{
-    padding: 2rem;
-    font-size: 1.5rem;
-    font-style: italic;
-    background: var(--secmain-color);
-    border-radius: .5rem;
-    color: var(--black);
-    line-height: 2;
-    position: relative;
-    z-index: 0;
-    margin-bottom: 3rem;
+/* Styling untuk tombol Show Reviews dan Submit */
+.reviews .btn {
+    background-color: #4CAF50 !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 20px !important;
+    font-size: 1rem !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease !important;
+    display: inline-block !important;
+    margin-top: 10px !important;
 }
 
-.reviews .slide p::before{
-    content: '';
-    position: absolute;
-    bottom: -1.5rem; left: .7rem;
-    height: 3rem; width: 3rem;
-    background: var(--main-color);
-    transform: rotate(45deg);
+/* Tombol saat hover */
+.reviews .btn:hover {
+    background-color: #45a049 !important;
 }
 
-.reviews .slide {
-    display: inline-block;
-    position: relative;
-    margin-top: 1rem;
-    background-color: var(--black);
-    color: var(--black); 
-    padding: 3px 20px 10px 15px;
-    border: none; 
-    border-radius: 8px; 
-    z-index: 1;
+/* Styling untuk review container */
+#review-container {
+    margin-top: 20px !important;
 }
 
-.reviews .slide::before{
-    content: '';
-    position: absolute;
-    bottom: 8px; 
-    right: 8px; 
-    width: 100%;
-    height: 100%;
-    background-color: var(--main-color); 
-    z-index: -1; 
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 8px;
+/* Styling untuk textarea input review */
+#review-content {
+    width: 100% !important;
+    padding: 15px !important;
+    border: 1px solid #ddd !important;
+    border-radius: 8px !important;
+    font-size: 1rem !important;
+    resize: vertical !important;
+    min-height: 120px !important;
+    margin-bottom: 15px !important;
 }
 
-.reviews .slide .user{
-    display: flex;
-    align-items: center;
-    gap: 1rem;
+/* Styling untuk container existing reviews */
+#existing-reviews {
+    margin-top: 20px !important;
 }
 
-.reviews .slide .user img{
-    height: 7rem;
-    width: 7rem;
-    border-radius: 50%;   
+/* Styling untuk setiap item review */
+.review-item {
+    background-color: #fff !important;
+    padding: 20px !important;
+    margin-bottom: 20px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1) !important;
+    font-size: 1.5rem !important;
+    max-width: 100% !important;
+    transition: transform 0.3s ease !important;
 }
 
-.reviews .slide .user h3{
-    font-size: 2rem;
-    color: var(--white);
+/* Efek saat hover pada review */
+.review-item:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
-.reviews .slide .user span{
-    color: var(--white);
-    font-size: 1.5rem;
+/* Styling untuk nama pengulas */
+.review-item .review-author {
+    font-weight: bold !important;
+    font-size: 1.6rem !important;
+    color: #333 !important;
+    margin-bottom: 8px !important;
+}
+
+/* Styling untuk isi review */
+.review-item .review-text {
+    font-size: 1.4rem !important;
+    color: #555 !important;
+    line-height: 1.8 !important;
+}
+
+/* Styling untuk placeholder di textarea */
+#review-content::placeholder {
+    font-size: 1rem !important;
+    color: #aaa !important;
+}
+
+/* Styling validasi jika textarea kosong */
+#review-content:invalid {
+    border-color: red !important;
 }
 
 /* review end */

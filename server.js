@@ -3,23 +3,21 @@ const session = require('express-session');
 const path = require('path');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
-const sequelize = require('./config/database'); // Sequelize instance
-const mainRoutes = require('./routes/mainRoutes'); // Sesuaikan path jika berbeda
+const sequelize = require('./config/database'); 
+const mainRoutes = require('./routes/mainRoutes');
 const cors = require('cors');
-require('dotenv').config(); // Load .env file
+require('dotenv').config(); 
 
 const app = express();
 const PORT = 3000;
 
-// Serve static files from the public directory
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Configure session middleware (move this above the routes)
 app.use(
     session({
-        secret: process.env.SESSION_SECRET, // Use the secret from .env
+        secret: process.env.SESSION_SECRET, 
         resave: false,
         saveUninitialized: false,
         cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 },
@@ -30,7 +28,7 @@ app.use(
 app.use(bodyParser.json());
 
 // Define routes
-app.use('/auth', authRoutes); // Now req.session will work here
+app.use('/auth', authRoutes); 
 app.use('/', mainRoutes);
 
 // Route for index.html
@@ -45,7 +43,6 @@ app.get('/profile.html', (req, res) => {
     }
     res.sendFile(path.join(__dirname, 'views', 'profile.html'));
 });
-
 
 // Example route to test database connection
 app.get('/test-db', async (req, res) => {

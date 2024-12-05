@@ -5,6 +5,12 @@ const isAuthenticated = require('../Middleware/isAuthenticated');
 const Review = require('../models/review');
 const User = require('../models/user');
 
+// Error Handler
+const handleError = (res, error, message = 'Internal server error') => {
+    console.error(error);
+    res.status(500).json({ error: message, details: error.message });
+};
+
 // Route untuk mendapatkan data user
 router.get('/get-user', (req, res) => {
     if (req.session && req.session.user) {
@@ -25,36 +31,28 @@ router.get('/reviews', async (req, res) => {
             include: { model: User, attributes: ['username'] },
             order: [['createdAt', 'DESC']],
         });
-
-        console.log('Fetched reviews:', reviews); // Debug fetched data
         res.json(reviews);
     } catch (error) {
-        console.error('Error fetching reviews:', error); // Log error detail
-        res.status(500).json({ error: 'Failed to fetch reviews', details: error.message });
+        handleError(res, error, 'Failed to fetch reviews');
     }
 });
 
 // Tambahkan review baru
 router.post('/reviews', isAuthenticated, async (req, res) => {
+    const { content } = req.body;
+
+    if (!content || content.trim().length === 0) {
+        return res.status(400).json({ error: 'Review content cannot be empty' });
+    }
+
     try {
-        console.log('Session user:', req.session.user); // Debug session data
-        const { content } = req.body;
-        console.log('Content received:', content); // Debug input
-
-        if (!content) {
-            return res.status(400).json({ error: 'Review content cannot be empty' });
-        }
-
         const newReview = await Review.create({
-            userId: req.session.user.id, // Ensure req.session.user.id exists
+            userId: req.session.user.id, 
             content,
         });
-
-        console.log('Review successfully created:', newReview); // Debug saved data
         res.status(201).json(newReview);
     } catch (error) {
-        console.error('Error creating review:', error); // Log error details
-        res.status(500).json({ error: 'Failed to create review', details: error.message });
+        handleError(res, error, 'Failed to create review');
     }
 });
 

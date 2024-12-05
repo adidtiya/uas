@@ -500,7 +500,6 @@ section{
 
 /* review */    
 
-/* Styling untuk section reviews */
 .reviews {
     padding: 20px !important;
     background-color: #f9f9f9 !important;
@@ -511,7 +510,6 @@ section{
     font-family: 'Arial', sans-serif !important;
 }
 
-/* Styling untuk heading */
 .reviews .heading {
     text-align: center !important;
     font-size: 2rem !important;
@@ -519,7 +517,6 @@ section{
     color: #333 !important;
 }
 
-/* Styling untuk tombol Show Reviews dan Submit */
 .reviews .btn {
     background-color: #4CAF50 !important;
     color: white !important;
@@ -533,17 +530,14 @@ section{
     margin-top: 10px !important;
 }
 
-/* Tombol saat hover */
 .reviews .btn:hover {
     background-color: #45a049 !important;
 }
 
-/* Styling untuk review container */
 #review-container {
     margin-top: 20px !important;
 }
 
-/* Styling untuk textarea input review */
 #review-content {
     width: 100% !important;
     padding: 15px !important;
@@ -555,12 +549,10 @@ section{
     margin-bottom: 15px !important;
 }
 
-/* Styling untuk container existing reviews */
 #existing-reviews {
     margin-top: 20px !important;
 }
 
-/* Styling untuk setiap item review */
 .review-item {
     background-color: #fff !important;
     padding: 20px !important;
@@ -572,13 +564,11 @@ section{
     transition: transform 0.3s ease !important;
 }
 
-/* Efek saat hover pada review */
 .review-item:hover {
     transform: translateY(-5px) !important;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Styling untuk nama pengulas */
 .review-item .review-author {
     font-weight: bold !important;
     font-size: 1.6rem !important;
@@ -586,20 +576,17 @@ section{
     margin-bottom: 8px !important;
 }
 
-/* Styling untuk isi review */
 .review-item .review-text {
     font-size: 1.4rem !important;
     color: #555 !important;
     line-height: 1.8 !important;
 }
 
-/* Styling untuk placeholder di textarea */
 #review-content::placeholder {
     font-size: 1rem !important;
     color: #aaa !important;
 }
 
-/* Styling validasi jika textarea kosong */
 #review-content:invalid {
     border-color: red !important;
 }

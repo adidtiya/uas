@@ -1,19 +1,26 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/user'); // Sequelize User model
-const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const router = express.Router();
 
+// Multer setup for file upload
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'uploads/'); // Folder tempat file akan disimpan
+        cb(null, 'uploads/'); // Folder tempat file disimpan
     },
     filename: (req, file, cb) => {
         cb(null, Date.now() + path.extname(file.originalname)); // Format nama file
     },
 });
 const upload = multer({ storage });
+
+// Utility function for error handling
+const handleError = (res, err, message = 'Internal server error') => {
+    console.error(err);
+    res.status(500).json({ error: message, details: err.message });
+};
 
 // Signup Route
 router.post('/signup', async (req, res) => {
@@ -24,26 +31,17 @@ router.post('/signup', async (req, res) => {
     }
 
     try {
-        // Check if the email is already registered
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
             return res.status(409).json({ error: 'Email already in use' });
         }
 
-        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
-
-        // Create a new user
-        const newUser = await User.create({
-            username,
-            email,
-            password: hashedPassword,
-        });
+        const newUser = await User.create({ username, email, password: hashedPassword });
 
         res.status(201).json({ message: 'Signup successful', userId: newUser.id });
     } catch (err) {
-        console.error('Error during signup:', err);
-        res.status(500).json({ error: 'Internal server error', details: err.message });
+        handleError(res, err);
     }
 });
 
@@ -62,27 +60,20 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ error: 'Invalid credentials' });
         }
 
-        // Store user data in session
-        req.session.user = {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-            profilePhoto: user.profilePhoto, 
-        };
-
+        req.session.user = { id: user.id, username: user.username, email: user.email, profilePhoto: user.profilePhoto };
         res.status(200).json({ message: 'Login successful', user: req.session.user });
     } catch (err) {
-        res.status(500).json({ error: 'Internal server error', details: err.message });
+        handleError(res, err);
     }
 });
 
 // Logout Route
 router.post('/logout', (req, res) => {
-    req.session.destroy(err => {
+    req.session.destroy((err) => {
         if (err) {
-            return res.status(500).json({ error: 'Failed to log out' });
+            return res.status(500).json({ message: 'Logout failed' });
         }
-        res.clearCookie('connect.sid'); // Clear session cookie
+        res.clearCookie('connect.sid');
         res.status(200).json({ message: 'Logout successful' });
     });
 });
@@ -95,38 +86,19 @@ router.get('/get-user', async (req, res) => {
 
     try {
         const user = await User.findByPk(req.session.user.id);
-        if (user) {
-            return res.status(200).json({
-                username: user.username,
-                email: user.email,
-                profilePhoto: user.profilePhoto, // Ambil dari database
-                joinedDate: user.createdAt,
-            });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
         }
-        res.status(404).json({ error: 'User not found' });
+
+        res.status(200).json({
+            username: user.username,
+            email: user.email,
+            profilePhoto: user.profilePhoto,
+            joinedDate: user.createdAt,
+        });
     } catch (err) {
-        res.status(500).json({ error: 'Internal server error', details: err.message });
+        handleError(res, err);
     }
-});
-
-// Fetch user data
-router.get('/get-user', (req, res) => {
-    if (!req.session.user) {
-        return res.status(401).json({ message: 'Not logged in' });
-    }
-    res.json(req.session.user);
-});
-
-
-
-// Logout
-router.post('/logout', (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            return res.status(500).json({ message: 'Logout failed' });
-        }
-        res.json({ message: 'Logged out successfully' });
-    });
 });
 
 // Update Profile Route
@@ -140,41 +112,36 @@ router.put('/update-profile', upload.single('profilePhoto'), async (req, res) =>
             return res.status(404).json({ error: 'User not found' });
         }
 
-        // Update user data
         user.username = username || user.username;
         if (photoUrl) user.profilePhoto = photoUrl;
         await user.save();
 
-        // Update session data
         req.session.user.username = user.username;
         req.session.user.profilePhoto = user.profilePhoto;
 
         res.json({ message: 'Profile updated successfully', photoUrl });
     } catch (err) {
-        res.status(500).json({ error: 'Failed to update profile', details: err.message });
+        handleError(res, err, 'Failed to update profile');
     }
 });
 
 // Delete Account Route
 router.delete('/delete-account', async (req, res) => {
+    if (!req.session.user) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
     try {
-        if (!req.session.user) {
-            return res.status(401).json({ error: 'Unauthorized' });
-        }
-
-        const userId = req.session.user.id;
-
-        const deletedUser = await User.destroy({ where: { id: userId } });
-
+        const deletedUser = await User.destroy({ where: { id: req.session.user.id } });
         if (deletedUser) {
-            req.session.destroy(); // Destroy session
+            req.session.destroy();
             res.status(200).json({ message: 'Account deleted successfully' });
         } else {
             res.status(404).json({ error: 'User not found' });
         }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Failed to delete account' });
+    } catch (err) {
+        handleError(res, err, 'Failed to delete account');
     }
 });
+
 module.exports = router;
